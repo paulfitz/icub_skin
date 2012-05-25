@@ -10,9 +10,11 @@ using namespace std;
 class SkinManagerServer : public SkinManager {
 private:
     double factor;
+    TaxelPose omnipose;
 public:
     SkinManagerServer() {
         factor = 0;
+        omnipose.val = 42.42;
     }
 
     virtual bool calib() {
@@ -32,20 +34,44 @@ public:
         return v;
     }
 
-    bool set_smooth_factor(double factor) {
+    virtual bool set_smooth_factor(double factor) {
         this->factor = factor;
         return true;
     }
 
-    double get_smooth_factor() {
+    virtual double get_smooth_factor() {
         return factor;
     }
 
-    map<string,string> get_info() {
+    virtual map<string,string> get_info() {
         map<string,string> result;
         result["color"] = "green";
         result["animal"] = "frog";
         return result;
+    }
+
+    virtual bool set_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index, const TaxelPose& pose) {
+        omnipose = pose;
+        return true;
+    }
+
+    virtual TaxelPose get_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index) {
+        return omnipose;
+    }
+
+    virtual bool set_poses(const std::string& body_part, const std::string& skin_part, const std::vector<TaxelPose> & poses) {
+        if (poses.size()>0) {
+            omnipose = poses[0];
+        }
+        return true;
+    }
+
+    virtual std::vector<TaxelPose>  get_poses(const std::string& body_part, const std::string& skin_part) {
+        std::vector<TaxelPose> poses;
+        poses.push_back(omnipose);
+        poses.push_back(omnipose);
+        poses.push_back(omnipose);
+        return poses;
     }
 };
 

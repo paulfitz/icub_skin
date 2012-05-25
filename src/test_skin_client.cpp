@@ -32,6 +32,12 @@ int main(int argc, char *argv[]) {
         printf("Info: %s -> %s\n", it->first.c_str(), it->second.c_str());
     }
 
+    vector<TaxelPose> poses = skin.get_poses("this is","ignored");
+    for (vector<TaxelPose>::iterator it = poses.begin();
+         it != poses.end(); it++) {
+        printf("Pose: %g\n", it->val);
+    }
+
     port.close();
   
     return 0;

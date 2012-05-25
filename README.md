@@ -10,3 +10,6 @@ To test:
 
 If you change skin.thrift and want to regenerate IDL files, set
 ALLOW_IDL_GENERATION to on with CMake.
+
+Use something like "yarp read /log tcp+log.in://skin/server" to
+eavesdrop on the conversation.

@@ -6,11 +6,14 @@ include(${YARP_MODULE_PATH}/YarpIDL.cmake)
 
 yarp_idl(skin.thrift 
   src/SkinManager.cpp 
-  include/iCub/SkinManager.h AS iCub/SkinManager.h)
+  include/iCub/SkinManager.h AS iCub/SkinManager.h
+  src/TaxelPose.cpp 
+  include/iCub/TaxelPose.h AS iCub/TaxelPose.h)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_library(skin_manager src/SkinManager.cpp include/iCub/SkinManager.h)
+add_library(skin_manager src/SkinManager.cpp include/iCub/SkinManager.h
+  include/iCub/TaxelPose.h src/TaxelPose.cpp include/iCub/TaxelPose.h)
 
 add_executable(test_skin_server src/test_skin_server.cpp)
 add_executable(test_skin_client src/test_skin_client.cpp)

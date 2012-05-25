@@ -8,6 +8,7 @@
 #include <yarp/os/idl/WireTypes.h>
 
 #include <iCub/SkinManager.h>
+#include <iCub/TaxelPose.h>
 
 class SkinManager : public yarp::os::Wire {
 public:
@@ -22,6 +23,15 @@ public:
   virtual double get_smooth_factor();
   virtual bool set_threshold(const int32_t threshold);
   virtual int32_t get_threshold();
+  virtual bool set_gain(const double gain);
+  virtual double get_gain();
+  virtual bool set_contact_gain(const double gain);
+  virtual double get_contact_gain();
+  virtual bool is_calibrating();
+  virtual bool set_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index, const TaxelPose& pose);
+  virtual TaxelPose get_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index);
+  virtual bool set_poses(const std::string& body_part, const std::string& skin_part, const std::vector<TaxelPose> & poses);
+  virtual std::vector<TaxelPose>  get_poses(const std::string& body_part, const std::string& skin_part);
   virtual std::map<std::string, std::string>  get_info();
   virtual bool read(yarp::os::ConnectionReader& connection);
 };
