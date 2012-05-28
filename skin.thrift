@@ -1,14 +1,11 @@
-
-// Not sure what a pose is, so leaving a placeholder structure.
-// If just a single number, this could be simplified.
 struct TaxelPose {
-  1: double val;
+  1: list<double> pose;
 }
 
-service SkinManager {
+service SkinCommand {
   bool calib();
 
-  list<i32> get_touch_thresholds();
+  list<double> get_touch_thresholds();
 
   bool set_binarization(1: bool flag);
   bool get_binarization();
@@ -33,8 +30,11 @@ service SkinManager {
   bool set_pose(1: string body_part, 2: string skin_part, 3: i32 taxel_index, 4: TaxelPose pose);
   TaxelPose get_pose(1: string body_part, 2: string skin_part, 3: i32 taxel_index);
 
-  bool set_poses(1: string body_part, 2: string skin_part, 3: list<TaxelPose> poses);
-  list<TaxelPose> get_poses(1: string body_part, 2: string skin_part);
+  bool set_poses_part(1: string body_part, 2: string skin_part, 3: list<TaxelPose> poses);
+  list<TaxelPose> get_poses_part(1: string body_part, 2: string skin_part);
+
+  bool set_poses_all(1: list<TaxelPose> poses);
+  list<TaxelPose> get_poses_all();
 
   map<string,string> get_info();
 }

@@ -2,19 +2,24 @@
 
 #include <stdio.h>
 #include <yarp/os/all.h>
-#include <iCub/SkinManager.h>
+#include <iCub/SkinCommand.h>
 
 using namespace yarp::os;
 using namespace std;
 
-class SkinManagerServer : public SkinManager {
+class SkinCommandServer : public SkinCommand {
 private:
     double factor;
     TaxelPose omnipose;
 public:
-    SkinManagerServer() {
+    SkinCommandServer() {
         factor = 0;
-        omnipose.val = 42.42;
+        omnipose.pose.push_back(42.1);
+        omnipose.pose.push_back(42.2);
+        omnipose.pose.push_back(42.3);
+        omnipose.pose.push_back(42.42);
+        omnipose.pose.push_back(42.5);
+        omnipose.pose.push_back(42.6);
     }
 
     virtual bool calib() {
@@ -27,8 +32,8 @@ public:
         return flag;
     }
 
-    virtual std::vector<int32_t> get_touch_thresholds() {
-        std::vector<int32_t> v;
+    virtual std::vector<double> get_touch_thresholds() {
+        std::vector<double> v;
         v.push_back(20);
         v.push_back(50);
         return v;
@@ -59,14 +64,14 @@ public:
         return omnipose;
     }
 
-    virtual bool set_poses(const std::string& body_part, const std::string& skin_part, const std::vector<TaxelPose> & poses) {
+    virtual bool set_poses_all(const std::vector<TaxelPose> & poses) {
         if (poses.size()>0) {
             omnipose = poses[0];
         }
         return true;
     }
 
-    virtual std::vector<TaxelPose>  get_poses(const std::string& body_part, const std::string& skin_part) {
+    virtual std::vector<TaxelPose> get_poses_all() {
         std::vector<TaxelPose> poses;
         poses.push_back(omnipose);
         poses.push_back(omnipose);
@@ -79,7 +84,7 @@ int main(int argc, char *argv[]) {
     Network yarp;
     int r;
 
-    SkinManagerServer skin;
+    SkinCommandServer skin;
     Port port;
     skin.yarp().attachAsServer(port);
     if (!port.open("/skin/server")) { return 1; }

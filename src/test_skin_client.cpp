@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <yarp/os/all.h>
-#include <iCub/SkinManager.h>
+#include <iCub/SkinCommand.h>
 
 using namespace yarp::os;
 using namespace std;
@@ -11,17 +11,17 @@ int main(int argc, char *argv[]) {
     Network yarp;
     int r;
 
-    SkinManager skin;
+    SkinCommand skin;
     Port port;
     skin.yarp().attachAsClient(port);
     if (!port.open("/skin/client")) { return 1; }
     if (!port.addOutput("/skin/server")) { return 1; }
 
     skin.calib();
-    vector<int32_t> thresholds = skin.get_touch_thresholds();
-    for (vector<int32_t>::iterator it = thresholds.begin();
+    vector<double> thresholds = skin.get_touch_thresholds();
+    for (vector<double>::iterator it = thresholds.begin();
          it != thresholds.end(); it++) {
-        printf("Threshold: %d\n", *it);
+        printf("Threshold: %g\n", *it);
     }
 
     skin.set_smooth_factor(0.42);
@@ -32,10 +32,15 @@ int main(int argc, char *argv[]) {
         printf("Info: %s -> %s\n", it->first.c_str(), it->second.c_str());
     }
 
-    vector<TaxelPose> poses = skin.get_poses("this is","ignored");
+    vector<TaxelPose> poses = skin.get_poses_all();
     for (vector<TaxelPose>::iterator it = poses.begin();
          it != poses.end(); it++) {
-        printf("Pose: %g\n", it->val);
+        printf("Pose:");
+        for (vector<double>::iterator it2 = it->pose.begin(); 
+             it2 != it->pose.end(); it2++) {
+            printf(" %g", *it2);
+        }
+        printf("\n");
     }
 
     port.close();
