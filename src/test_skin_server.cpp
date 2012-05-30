@@ -14,12 +14,14 @@ private:
 public:
     SkinCommandServer() {
         factor = 0;
-        omnipose.pose.push_back(42.1);
-        omnipose.pose.push_back(42.2);
-        omnipose.pose.push_back(42.3);
-        omnipose.pose.push_back(42.42);
-        omnipose.pose.push_back(42.5);
-        omnipose.pose.push_back(42.6);
+        omnipose.position.resize(3);
+        omnipose.position[0] = 1;
+        omnipose.position[1] = 3;
+        omnipose.position[2] = 5;
+        omnipose.normal.resize(3);
+        omnipose.normal[0] = 50;
+        omnipose.normal[1] = 30;
+        omnipose.normal[2] = 10;
     }
 
     virtual bool calib() {
@@ -52,16 +54,8 @@ public:
         map<string,string> result;
         result["color"] = "green";
         result["animal"] = "frog";
+        result["height"] = "two hundred million miles";
         return result;
-    }
-
-    virtual bool set_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index, const TaxelPose& pose) {
-        omnipose = pose;
-        return true;
-    }
-
-    virtual TaxelPose get_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index) {
-        return omnipose;
     }
 
     virtual bool set_poses_all(const std::vector<TaxelPose> & poses) {
@@ -75,6 +69,16 @@ public:
         std::vector<TaxelPose> poses;
         poses.push_back(omnipose);
         poses.push_back(omnipose);
+        poses.push_back(omnipose);
+        poses.push_back(omnipose);
+        return poses;
+    }
+
+    virtual std::vector<TaxelPose> get_poses_body_part(const BodyPart body_part) {
+        BodyPartVocab v;
+        printf("Called for body part %s\n", 
+               v.toString((int)body_part).c_str());
+        std::vector<TaxelPose> poses;
         poses.push_back(omnipose);
         return poses;
     }

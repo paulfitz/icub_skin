@@ -7,8 +7,11 @@
 #include <yarp/os/Wire.h>
 #include <yarp/os/idl/WireTypes.h>
 
+#include <yarp/sig/Vector.h>
 #include <iCub/SkinCommand.h>
 #include <iCub/TaxelPose.h>
+#include <iCub/BodyPart.h>
+#include <iCub/SkinPart.h>
 
 class SkinCommand : public yarp::os::Wire {
 public:
@@ -28,10 +31,12 @@ public:
   virtual bool set_contact_gain(const double gain);
   virtual double get_contact_gain();
   virtual bool is_calibrating();
-  virtual bool set_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index, const TaxelPose& pose);
-  virtual TaxelPose get_pose(const std::string& body_part, const std::string& skin_part, const int32_t taxel_index);
-  virtual bool set_poses_part(const std::string& body_part, const std::string& skin_part, const std::vector<TaxelPose> & poses);
-  virtual std::vector<TaxelPose>  get_poses_part(const std::string& body_part, const std::string& skin_part);
+  virtual bool set_pose(const BodyPart body_part, const SkinPart skin_part, const int32_t taxel_index, const TaxelPose& pose);
+  virtual TaxelPose get_pose(const BodyPart body_part, const SkinPart skin_part, const int32_t taxel_index);
+  virtual bool set_poses_skin_part(const BodyPart body_part, const SkinPart skin_part, const std::vector<TaxelPose> & poses);
+  virtual std::vector<TaxelPose>  get_poses_skin_part(const BodyPart body_part, const SkinPart skin_part);
+  virtual bool set_poses_body_part(const BodyPart body_part, const std::vector<TaxelPose> & poses);
+  virtual std::vector<TaxelPose>  get_poses_body_part(const BodyPart body_part);
   virtual bool set_poses_all(const std::vector<TaxelPose> & poses);
   virtual std::vector<TaxelPose>  get_poses_all();
   virtual std::map<std::string, std::string>  get_info();

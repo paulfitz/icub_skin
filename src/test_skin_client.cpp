@@ -33,14 +33,14 @@ int main(int argc, char *argv[]) {
     }
 
     vector<TaxelPose> poses = skin.get_poses_all();
+    printf("%d poses found\n", poses.size());
     for (vector<TaxelPose>::iterator it = poses.begin();
          it != poses.end(); it++) {
-        printf("Pose:");
-        for (vector<double>::iterator it2 = it->pose.begin(); 
-             it2 != it->pose.end(); it2++) {
-            printf(" %g", *it2);
-        }
-        printf("\n");
+        // Place yarp::sig::Vectors into bottles from printing
+        Bottle pos, angle;
+        pos.read(it->position);
+        angle.read(it->normal);
+        printf("Pose: %s / %s\n", pos.toString().c_str(), angle.toString().c_str());
     }
 
     port.close();

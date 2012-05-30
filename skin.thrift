@@ -1,5 +1,24 @@
+
+struct Vector {
+  1: list<double> content;
+} (
+  yarp.name = "yarp::sig::Vector"
+)
+
+enum BodyPart {
+  RIGHT_ARM = 1,
+  LEFT_ARM = 2
+}
+
+enum SkinPart {
+  FORE_ARM = 3,
+  UPPER_ARM = 4,
+  HAND = 5
+}
+
 struct TaxelPose {
-  1: list<double> pose;
+  1: Vector position;
+  2: Vector normal;
 }
 
 service SkinCommand {
@@ -27,11 +46,14 @@ service SkinCommand {
 
   bool is_calibrating();
 
-  bool set_pose(1: string body_part, 2: string skin_part, 3: i32 taxel_index, 4: TaxelPose pose);
-  TaxelPose get_pose(1: string body_part, 2: string skin_part, 3: i32 taxel_index);
+  bool set_pose(1: BodyPart body_part, 2: SkinPart skin_part, 3: i32 taxel_index, 4: TaxelPose pose);
+  TaxelPose get_pose(1: BodyPart body_part, 2: SkinPart skin_part, 3: i32 taxel_index);
 
-  bool set_poses_part(1: string body_part, 2: string skin_part, 3: list<TaxelPose> poses);
-  list<TaxelPose> get_poses_part(1: string body_part, 2: string skin_part);
+  bool set_poses_skin_part(1: BodyPart body_part, 2: SkinPart skin_part, 3: list<TaxelPose> poses);
+  list<TaxelPose> get_poses_skin_part(1: BodyPart body_part, 2: SkinPart skin_part);
+
+  bool set_poses_body_part(1: BodyPart body_part, 2: list<TaxelPose> poses);
+  list<TaxelPose> get_poses_body_part(1: BodyPart body_part);
 
   bool set_poses_all(1: list<TaxelPose> poses);
   list<TaxelPose> get_poses_all();
