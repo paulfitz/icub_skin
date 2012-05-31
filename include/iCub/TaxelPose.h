@@ -13,7 +13,14 @@
 #include <iCub/BodyPart.h>
 #include <iCub/SkinPart.h>
 
-class TaxelPose : public yarp::os::idl::WirePortable {
+namespace iCub {
+  namespace skin {
+    class TaxelPose;
+  }
+}
+
+
+class iCub::skin::TaxelPose : public yarp::os::idl::WirePortable {
 public:
   yarp::sig::Vector position;
   yarp::sig::Vector normal;

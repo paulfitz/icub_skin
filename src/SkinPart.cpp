@@ -10,6 +10,9 @@
 #include <iCub/BodyPart.h>
 #include <iCub/SkinPart.h>
 
+namespace iCub { namespace skin {
+
+
 int SkinPartVocab::fromString(const std::string& input) {
   // definitely needs optimizing :-)
   if (input=="FORE_ARM") return (int)FORE_ARM;
@@ -28,3 +31,6 @@ std::string SkinPartVocab::toString(int input) {
   }
   return "";
 }
+}} // namespace
+
+

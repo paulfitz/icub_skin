@@ -7,6 +7,8 @@
 using namespace yarp::os;
 using namespace std;
 
+using namespace iCub::skin;
+
 class SkinCommandServer : public SkinCommand {
 private:
     double factor;

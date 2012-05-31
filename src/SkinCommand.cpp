@@ -9,6 +9,9 @@
 #include <iCub/BodyPart.h>
 #include <iCub/SkinPart.h>
 
+namespace iCub { namespace skin {
+
+
 class SkinCommand_calib : public yarp::os::Portable {
 public:
   bool _return;
@@ -1100,3 +1103,6 @@ bool SkinCommand::read(yarp::os::ConnectionReader& connection) {
   }
   return false;
 }
+}} // namespace
+
+

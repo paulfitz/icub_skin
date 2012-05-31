@@ -13,13 +13,19 @@
 #include <iCub/BodyPart.h>
 #include <iCub/SkinPart.h>
 
-enum SkinPart {
-  FORE_ARM = 3,
-  UPPER_ARM = 4,
-  HAND = 5
-};
+namespace iCub {
+  namespace skin {
+    enum SkinPart {
+      FORE_ARM = 3,
+      UPPER_ARM = 4,
+      HAND = 5
+    };
 
-class SkinPartVocab : public yarp::os::idl::WireVocab {
+    class SkinPartVocab;
+  }
+}
+
+class iCub::skin::SkinPartVocab : public yarp::os::idl::WireVocab {
 public:
   virtual int fromString(const std::string& input);
   virtual std::string toString(int input);

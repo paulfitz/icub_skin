@@ -1,4 +1,6 @@
 
+namespace yarp iCub.skin
+
 struct Vector {
   1: list<double> content;
 } (

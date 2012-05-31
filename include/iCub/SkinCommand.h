@@ -13,7 +13,14 @@
 #include <iCub/BodyPart.h>
 #include <iCub/SkinPart.h>
 
-class SkinCommand : public yarp::os::Wire {
+namespace iCub {
+  namespace skin {
+    class SkinCommand;
+  }
+}
+
+
+class iCub::skin::SkinCommand : public yarp::os::Wire {
 public:
   SkinCommand() { yarp().setOwner(*this); }
   virtual bool calib();

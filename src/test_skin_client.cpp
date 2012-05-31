@@ -7,6 +7,8 @@
 using namespace yarp::os;
 using namespace std;
 
+using namespace iCub::skin;
+
 int main(int argc, char *argv[]) {
     Network yarp;
     int r;
